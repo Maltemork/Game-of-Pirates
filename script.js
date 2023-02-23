@@ -10,11 +10,11 @@ function start() {
   console.log("JavaScript kører!");
 
   // Start animationer
-  document.querySelector("#treasure1_container").classList.add("falling");
-  document.querySelector("#treasure2_container").classList.add("falling");
-  document.querySelector("#treasure3_container").classList.add("falling");
-  document.querySelector("#skull_container").classList.add("falling");
-  document.querySelector("#rum_container").classList.add("falling");
+  document.querySelector("#treasure1_container").classList.add("jumping");
+  document.querySelector("#treasure2_container").classList.add("jumping");
+  document.querySelector("#treasure3_container").classList.add("jumping");
+  document.querySelector("#skull_container").classList.add("jumping");
+  document.querySelector("#rum_container").classList.add("jumping");
 
   // Registrer click
   document
@@ -29,9 +29,7 @@ function start() {
   document
     .querySelector("#skull_container")
     .addEventListener("click", clickSkull);
-  document
-    .querySelector("#rum_container")
-    .addEventListener("click", clickrum);
+  document.querySelector("#rum_container").addEventListener("click", clickrum);
 }
 
 // ======= Click treasure Functions ======= //
@@ -114,10 +112,10 @@ function treasureGone() {
   // fjern pause
   document.querySelector("#treasure1_container").classList.remove("paused");
 
-  // genstart falling animation
-  document.querySelector("#treasure1_container").classList.remove("falling");
+  // genstart jumping animation
+  document.querySelector("#treasure1_container").classList.remove("jumping");
   document.querySelector("#treasure1_container").offsetWidth;
-  document.querySelector("#treasure1_container").classList.add("falling");
+  document.querySelector("#treasure1_container").classList.add("jumping");
 
   // gør det muligt at klikke på treasure igen
   document
@@ -137,10 +135,10 @@ function treasureGone2() {
   // fjern pause
   document.querySelector("#treasure2_container").classList.remove("paused");
 
-  // genstart falling animation
-  document.querySelector("#treasure2_container").classList.remove("falling");
+  // genstart jumping animation
+  document.querySelector("#treasure2_container").classList.remove("jumping");
   document.querySelector("#treasure2_container").offsetWidth;
-  document.querySelector("#treasure2_container").classList.add("falling");
+  document.querySelector("#treasure2_container").classList.add("jumping");
 
   // gør det muligt at klikke på treasure igen
   document
@@ -160,10 +158,10 @@ function treasureGone3() {
   // fjern pause
   document.querySelector("#treasure3_container").classList.remove("paused");
 
-  // genstart falling animation
-  document.querySelector("#treasure3_container").classList.remove("falling");
+  // genstart jumping animation
+  document.querySelector("#treasure3_container").classList.remove("jumping");
   document.querySelector("#treasure3_container").offsetWidth;
-  document.querySelector("#treasure3_container").classList.add("falling");
+  document.querySelector("#treasure3_container").classList.add("jumping");
 
   // gør det muligt at klikke på treasure igen
   document
@@ -175,7 +173,12 @@ function treasureGone3() {
 function incrementPoints() {
   console.log("Points increment");
   points++;
-  displayPoints();
+  if (points >= 10) {
+    displayPoints();
+    levelComplete();
+  } else {
+    displayPoints();
+  }
 }
 
 function displayPoints() {
@@ -215,18 +218,16 @@ function skullGone() {
   // fjern pause
   document.querySelector("#skull_container").classList.remove("paused");
 
-  // genstart falling animation
-  document.querySelector("#skull_container").classList.remove("falling");
+  // genstart jumping animation
+  document.querySelector("#skull_container").classList.remove("jumping");
   document.querySelector("#skull_container").offsetWidth;
-  document.querySelector("#skull_container").classList.add("falling");
+  document.querySelector("#skull_container").classList.add("jumping");
 
   // gør det muligt at klikke på skull igen
   document
     .querySelector("#skull_container")
     .addEventListener("click", clickSkull);
 }
-
-
 
 // ======= Click rum Function ======= //
 function clickrum() {
@@ -262,15 +263,13 @@ function rumGone() {
   // fjern pause
   document.querySelector("#rum_container").classList.remove("paused");
 
-  // genstart falling animation
-  document.querySelector("#rum_container").classList.remove("falling");
+  // genstart jumping animation
+  document.querySelector("#rum_container").classList.remove("jumping");
   document.querySelector("#rum_container").offsetWidth;
-  document.querySelector("#rum_container").classList.add("falling");
+  document.querySelector("#rum_container").classList.add("jumping");
 
   // gør det muligt at klikke på rum igen
-  document
-    .querySelector("#rum_container")
-    .addEventListener("click", clickrum);
+  document.querySelector("#rum_container").addEventListener("click", clickrum);
 }
 
 // ======= Increment lives ======= //
@@ -287,12 +286,26 @@ function displayIncrementedLives() {
 
 // ======= Decrement lives ======= //
 function decrementLives() {
-  displayDecrementedLives();
   lives--;
+  if (lives === 0) {
+    gameOver();
+  } else {
+    displayDecrementedLives();
+  }
 }
 
 function displayDecrementedLives() {
   console.log("#rum" + lives);
   document.querySelector("#rum" + lives).classList.remove("active_rum");
   document.querySelector("#rum" + lives).classList.add("broken_rum");
+}
+
+function gameOver() {
+  console.log("GAME OVER.");
+  document.querySelector("#game_over").classList.remove("hidden");
+}
+
+function levelComplete() {
+  console.log("LEVEL COMPLETE!");
+  document.querySelector("#level_complete").classList.remove("hidden");
 }

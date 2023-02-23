@@ -1,7 +1,14 @@
 body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+h2 {
+  font-size: 400%;
+  text-align: center;
 }
 
 #screen {
@@ -23,7 +30,7 @@ body {
   grid-area: 1 / 1;
   background-image: url(images/backgroundImage.jpg);
   background-size: cover;
-
+  overflow: hidden;
 }
 
 #game_elements {
@@ -127,30 +134,60 @@ body {
   width: 100%;
 }
 
+#game_over {
+  grid-area: 1 /1;
+  z-index: 999;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  background-image: linear-gradient(150deg, #c90303 0%, #790909 100%);
+  color: #ffffff;
+  overflow: auto;
+}
+
+#level_complete {
+  grid-area: 1 /1;
+  z-index: 999;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  background-image: url(images/winScreen.jpg);
+  background-size: cover;
+  color: #ffffff;
+}
+
+.hidden,
+#game_over.hidden,
+#level_complete.hidden {
+  display: none;
+}
+
 .active_rum {
   filter: drop-shadow(0 0 2px yellow);
 }
 
 .broken_rum {
-  filter: grayscale(75%) blur(0.5px);
+  filter: grayscale(100%) brightness(100%);
 }
 
 /* Animations */
 
-.falling {
-  animation-name: falling;
-  animation-duration: 4s;
-  animation-timing-function: linear;
+.jumping {
+  animation-name: jumping;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
   animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
-@keyframes falling {
+@keyframes jumping {
   0% {
-    transform: translate(0, -100%);
+    transform: translateY(1400px);
   }
 
   100% {
-    transform: translate(0, 56.25vw);
+    transform: translateY(200px);
   }
 }
 
