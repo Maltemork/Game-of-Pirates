@@ -301,8 +301,8 @@ function displayDecrementedLives() {
 }
 
 function gameOver() {
-  console.log("GAME OVER.");
   document.querySelector("#game_over").classList.remove("hidden");
+  console.log("GAME OVER.");
 }
 
 function levelComplete() {
