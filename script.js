@@ -8,165 +8,113 @@ let lives = 3;
 // ======= Start ======= //
 function start() {
   console.log("JavaScript kører!");
+  startAnimations();
+  startClicks();
+  startPositions();
+  animationEnd();
+}
 
-  // Start animationer
-  document.querySelector("#treasure1_container").classList.add("jumping");
-  document.querySelector("#treasure2_container").classList.add("jumping");
-  document.querySelector("#treasure3_container").classList.add("jumping");
-  document.querySelector("#skull_container").classList.add("jumping");
-  document.querySelector("#rum_container").classList.add("jumping");
+function startPositions() {
+  document.querySelector("#treasure1_container").classList.add("position1");
+  document.querySelector("#treasure2_container").classList.add("position2");
+  document.querySelector("#treasure3_container").classList.add("position3");
+  document.querySelector("#skull_container").classList.add("position4");
+  document.querySelector("#rum_container").classList.add("position5");
+}
 
-  // Registrer click
+function startClicks() {
   document
     .querySelector("#treasure1_container")
-    .addEventListener("click", clickTreasure1);
+    .addEventListener("click", clickTreasure);
   document
     .querySelector("#treasure2_container")
-    .addEventListener("click", clickTreasure2);
+    .addEventListener("click", clickTreasure);
   document
     .querySelector("#treasure3_container")
-    .addEventListener("click", clickTreasure3);
+    .addEventListener("click", clickTreasure);
   document
     .querySelector("#skull_container")
     .addEventListener("click", clickSkull);
-  document.querySelector("#rum_container").addEventListener("click", clickrum);
+  document.querySelector("#rum_container").addEventListener("click", clickRum);
+}
+
+function startAnimations() {
+  document.querySelector("#treasure1_container").classList.add("jumping3");
+  document.querySelector("#treasure2_container").classList.add("jumping3");
+  document.querySelector("#treasure3_container").classList.add("jumping3");
+  document.querySelector("#skull_container").classList.add("jumping2");
+  document.querySelector("#rum_container").classList.add("jumping1");
+}
+
+function animationEnd() {
+  document
+    .querySelector("#treasure1_container")
+    .addEventListener("animationend", treasureRestart);
+  document
+    .querySelector("#treasure2_container")
+    .addEventListener("animationend", treasureRestart);
+  document
+    .querySelector("#treasure3_container")
+    .addEventListener("animationend", treasureRestart);
+  document
+    .querySelector("#skull_container")
+    .addEventListener("animationend", treasureRestart);
+  document
+    .querySelector("#rum_container")
+    .addEventListener("animationend", treasureRestart);
 }
 
 // ======= Click treasure Functions ======= //
-function clickTreasure1() {
+function clickTreasure() {
   console.log("Click");
+  let treasure = this;
   // Forhindr gentagne clicks
-  document
-    .querySelector("#treasure1_container")
-    .removeEventListener("click", clickTreasure1);
-
+  treasure.removeEventListener("click", clickTreasure);
   // Stop treasure container
-  document.querySelector("#treasure1_container").classList.add("paused");
-
+  treasure.classList.add("paused");
   //tæl point
   incrementPoints();
-
   // sæt forsvind-animation på treasure
-  document.querySelector("#treasure1_sprite").classList.add("zoom_out");
-
+  treasure.querySelector("img").classList.add("zoom_out");
   // når forsvind-animation er færdig: treasureGone
-  document
-    .querySelector("#treasure1_container")
-    .addEventListener("animationend", treasureGone);
-}
-
-function clickTreasure2() {
-  console.log("Click treasure2");
-  // Forhindr gentagne clicks
-  document
-    .querySelector("#treasure2_container")
-    .removeEventListener("click", clickTreasure2);
-
-  // Stop treasure container
-  document.querySelector("#treasure2_container").classList.add("paused");
-
-  //tæl point
-  incrementPoints();
-
-  // sæt forsvind-animation på treasure
-  document.querySelector("#treasure2_sprite").classList.add("zoom_out");
-
-  // når forsvind-animation er færdig: treasureGone
-  document
-    .querySelector("#treasure2_container")
-    .addEventListener("animationend", treasureGone2);
-}
-
-function clickTreasure3() {
-  console.log("Click treasure3");
-  // Forhindr gentagne clicks
-  document
-    .querySelector("#treasure3_container")
-    .removeEventListener("click", clickTreasure3);
-
-  // Stop treasure container
-  document.querySelector("#treasure3_container").classList.add("paused");
-
-  //tæl point
-  incrementPoints();
-
-  // sæt forsvind-animation på treasure
-  document.querySelector("#treasure3_sprite").classList.add("zoom_out");
-
-  // når forsvind-animation er færdig: treasureGone
-  document
-    .querySelector("#treasure3_container")
-    .addEventListener("animationend", treasureGone3);
+  treasure.addEventListener("animationend", treasureGone);
 }
 
 // ======= treasure End Functions ======= //
 function treasureGone() {
   // fjern event der bringer os herind
-  document
-    .querySelector("#treasure1_container")
-    .removeEventListener("animationend", treasureGone);
-
-  // fjern forsvind-animation
-  document.querySelector("#treasure1_sprite").classList.remove("zoom_out");
-
-  // fjern pause
-  document.querySelector("#treasure1_container").classList.remove("paused");
-
+  let treasure = this;
+  treasure.removeEventListener("animationend", treasureGone);
+  treasure.classList.remove("paused");
+  treasure.querySelector("img").classList.remove("zoom_out");
   // genstart jumping animation
-  document.querySelector("#treasure1_container").classList.remove("jumping");
-  document.querySelector("#treasure1_container").offsetWidth;
-  document.querySelector("#treasure1_container").classList.add("jumping");
-
-  // gør det muligt at klikke på treasure igen
-  document
-    .querySelector("#treasure1_container")
-    .addEventListener("click", clickTreasure1);
+  treasureRestart.call(this);
 }
 
-function treasureGone2() {
-  // fjern event der bringer os herind
-  document
-    .querySelector("#treasure2_container")
-    .removeEventListener("animationend", treasureGone2);
+function treasureRestart() {
+  let treasure = this;
+  treasure.classList.remove("jumping1", "jumping2", "jumping3");
+  treasure.offsetWidth;
+  randomizedJumping.call(this);
+  // fjern position class, lav ny position nummer, sæt position class på igen.
+  treasure.classList.remove(
+    "position1",
+    "position2",
+    "position3",
+    "position4",
+    "position5",
+    "position6"
+  );
 
-  // fjern forsvind-animation
-  document.querySelector("#treasure2_sprite").classList.remove("zoom_out");
-
-  // fjern pause
-  document.querySelector("#treasure2_container").classList.remove("paused");
-
-  // genstart jumping animation
-  document.querySelector("#treasure2_container").classList.remove("jumping");
-  document.querySelector("#treasure2_container").offsetWidth;
-  document.querySelector("#treasure2_container").classList.add("jumping");
-
-  // gør det muligt at klikke på treasure igen
-  document
-    .querySelector("#treasure2_container")
-    .addEventListener("click", clickTreasure2);
+  let pos = Math.floor(Math.random() * 6) + 1;
+  treasure.classList.add("position" + pos);
+  treasure.addEventListener("click", clickTreasure);
 }
 
-function treasureGone3() {
-  // fjern event der bringer os herind
-  document
-    .querySelector("#treasure3_container")
-    .removeEventListener("animationend", treasureGone3);
-
-  // fjern forsvind-animation
-  document.querySelector("#treasure3_sprite").classList.remove("zoom_out");
-
-  // fjern pause
-  document.querySelector("#treasure3_container").classList.remove("paused");
-
-  // genstart jumping animation
-  document.querySelector("#treasure3_container").classList.remove("jumping");
-  document.querySelector("#treasure3_container").offsetWidth;
-  document.querySelector("#treasure3_container").classList.add("jumping");
-
-  // gør det muligt at klikke på treasure igen
-  document
-    .querySelector("#treasure3_container")
-    .addEventListener("click", clickTreasure3);
+function randomizedJumping() {
+  let treasure = this;
+  let number = Math.floor(Math.random() * 3) + 1;
+  treasure.classList.add("jumping" + number);
 }
 
 // ======= Increment Points ======= //
@@ -188,88 +136,72 @@ function displayPoints() {
 // ======= Click skull Function ======= //
 function clickSkull() {
   console.log("Click skull");
+  let skull = document.querySelector("#skull_container");
   // Forhindr gentagne clicks
-  document
-    .querySelector("#skull_container")
-    .removeEventListener("click", clickSkull);
-
+  skull.removeEventListener("click", clickSkull);
   // Stop skull container
-  document.querySelector("#skull_container").classList.add("paused");
-
+  skull.classList.add("paused");
   // sæt forsvind-animation på skull
-  document.querySelector("#skull_sprite").classList.add("zoom_in");
-
+  skull.querySelector("img").classList.add("zoom_in");
   // når forsvind-animation er færdig: skullGone
-  document
-    .querySelector("#skull_container")
-    .addEventListener("animationend", skullGone);
+  skull.addEventListener("animationend", skullGone);
+  // Fjern liv
   decrementLives();
 }
 
 function skullGone() {
   // fjern event der bringer os herind
-  document
-    .querySelector("#skull_container")
-    .removeEventListener("animationend", skullGone);
+  let skull = document.querySelector("#skull_container");
+  skull.removeEventListener("animationend", skullGone);
 
   // fjern forsvind-animation
-  document.querySelector("#skull_sprite").classList.remove("zoom_in");
+  skull.querySelector("img").classList.remove("zoom_in");
 
   // fjern pause
-  document.querySelector("#skull_container").classList.remove("paused");
+  skull.classList.remove("paused");
 
   // genstart jumping animation
-  document.querySelector("#skull_container").classList.remove("jumping");
-  document.querySelector("#skull_container").offsetWidth;
-  document.querySelector("#skull_container").classList.add("jumping");
+  skull.classList.remove("jumping");
+  skull.offsetWidth;
+  skull.classList.add("jumping");
 
   // gør det muligt at klikke på skull igen
-  document
-    .querySelector("#skull_container")
-    .addEventListener("click", clickSkull);
+  skull.addEventListener("click", clickSkull);
 }
 
 // ======= Click rum Function ======= //
-function clickrum() {
+function clickRum() {
   console.log("click rum");
+  let rum = document.querySelector("#rum_container");
   // Forhindr gentagne clicks
-  document
-    .querySelector("#rum_container")
-    .removeEventListener("click", clickrum);
-
+  rum.removeEventListener("click", clickRum);
   // Stop rum container
-  document.querySelector("#rum_container").classList.add("paused");
-
+  rum.classList.add("paused");
   // sæt forsvind-animation på rum
-  document.querySelector("#rum_sprite").classList.add("zoom_out");
-
+  rum.querySelector("img").classList.add("zoom_out");
   // når forsvind-animation er færdig: rumGone
-  document
-    .querySelector("#rum_container")
-    .addEventListener("animationend", rumGone);
-
+  rum.addEventListener("animationend", rumGone);
   incrementLives();
 }
 
 function rumGone() {
+  let rum = document.querySelector("#rum_container");
   // fjern event der bringer os herind
-  document
-    .querySelector("#rum_container")
-    .removeEventListener("animationend", rumGone);
+  rum.removeEventListener("animationend", rumGone);
 
   // fjern forsvind-animation
-  document.querySelector("#rum_sprite").classList.remove("zoom_out");
+  rum.querySelector("img").classList.remove("zoom_out");
 
   // fjern pause
-  document.querySelector("#rum_container").classList.remove("paused");
+  rum.classList.remove("paused");
 
   // genstart jumping animation
-  document.querySelector("#rum_container").classList.remove("jumping");
-  document.querySelector("#rum_container").offsetWidth;
-  document.querySelector("#rum_container").classList.add("jumping");
+  rum.classList.remove("jumping");
+  rum.offsetWidth;
+  rum.classList.add("jumping");
 
   // gør det muligt at klikke på rum igen
-  document.querySelector("#rum_container").addEventListener("click", clickrum);
+  rum.addEventListener("click", clickRum);
 }
 
 // ======= Increment lives ======= //
