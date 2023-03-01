@@ -12,6 +12,7 @@ function start() {
   startClicks();
   startPositions();
   animationEnd();
+  startSounds();
 }
 
 function startPositions() {
@@ -20,22 +21,23 @@ function startPositions() {
   document.querySelector("#treasure3_container").classList.add("position3");
   document.querySelector("#skull_container").classList.add("position4");
   document.querySelector("#rum_container").classList.add("position5");
+  document.querySelector("#rum_container").addEventListener("animationend", rumRestart);
 }
 
 function startClicks() {
   document
     .querySelector("#treasure1_container")
-    .addEventListener("click", clickTreasure);
+    .addEventListener("mousedown", clickTreasure);
   document
     .querySelector("#treasure2_container")
-    .addEventListener("click", clickTreasure);
+    .addEventListener("mousedown", clickTreasure);
   document
     .querySelector("#treasure3_container")
-    .addEventListener("click", clickTreasure);
+    .addEventListener("mousedown", clickTreasure);
   document
     .querySelector("#skull_container")
-    .addEventListener("click", clickSkull);
-  document.querySelector("#rum_container").addEventListener("click", clickRum);
+    .addEventListener("mousedown", clickSkull);
+  document.querySelector("#rum_container").addEventListener("click", rumRestart);
 }
 
 function startAnimations() {
@@ -43,7 +45,7 @@ function startAnimations() {
   document.querySelector("#treasure2_container").classList.add("jumping3");
   document.querySelector("#treasure3_container").classList.add("jumping3");
   document.querySelector("#skull_container").classList.add("jumping2");
-  document.querySelector("#rum_container").classList.add("jumping1");
+  document.querySelector("#rum_container").classList.add("jumping_rum");
 }
 
 function animationEnd() {
@@ -61,22 +63,25 @@ function animationEnd() {
     .addEventListener("animationend", treasureRestart);
   document
     .querySelector("#rum_container")
-    .addEventListener("animationend", treasureRestart);
+    .addEventListener("animationend", rumRestart);
+}
+
+function startSounds() {
+  document.querySelector("#background_music").play();
+  document.querySelector("#background_music").volume = 0.3;
+  document.querySelector("#skull_sound").volume = 0.3;
 }
 
 // ======= Click treasure Functions ======= //
 function clickTreasure() {
   console.log("Click");
   let treasure = this;
-  // Forhindr gentagne clicks
-  treasure.removeEventListener("click", clickTreasure);
-  // Stop treasure container
+  document.querySelector("#treasure_click").currentTime = 0;
+  document.querySelector("#treasure_click").play();
+  treasure.removeEventListener("mousedown", clickTreasure);
   treasure.classList.add("paused");
-  //tæl point
   incrementPoints();
-  // sæt forsvind-animation på treasure
   treasure.querySelector("img").classList.add("zoom_out");
-  // når forsvind-animation er færdig: treasureGone
   treasure.addEventListener("animationend", treasureGone);
 }
 
@@ -111,6 +116,7 @@ function treasureRestart() {
   treasure.addEventListener("click", clickTreasure);
 }
 
+// tilfældig nummer til jumping animation
 function randomizedJumping() {
   let treasure = this;
   let number = Math.floor(Math.random() * 3) + 1;
@@ -121,6 +127,7 @@ function randomizedJumping() {
 function incrementPoints() {
   console.log("Points increment");
   points++;
+  // winstate
   if (points >= 10) {
     displayPoints();
     levelComplete();
@@ -136,16 +143,12 @@ function displayPoints() {
 // ======= Click skull Function ======= //
 function clickSkull() {
   console.log("Click skull");
+  document.querySelector("#skull_sound").play();
   let skull = document.querySelector("#skull_container");
-  // Forhindr gentagne clicks
-  skull.removeEventListener("click", clickSkull);
-  // Stop skull container
+  skull.removeEventListener("mousedown", clickSkull);
   skull.classList.add("paused");
-  // sæt forsvind-animation på skull
   skull.querySelector("img").classList.add("zoom_in");
-  // når forsvind-animation er færdig: skullGone
   skull.addEventListener("animationend", skullGone);
-  // Fjern liv
   decrementLives();
 }
 
@@ -153,55 +156,60 @@ function skullGone() {
   // fjern event der bringer os herind
   let skull = document.querySelector("#skull_container");
   skull.removeEventListener("animationend", skullGone);
-
-  // fjern forsvind-animation
   skull.querySelector("img").classList.remove("zoom_in");
-
-  // fjern pause
   skull.classList.remove("paused");
-
-  // genstart jumping animation
   skull.classList.remove("jumping");
   skull.offsetWidth;
   skull.classList.add("jumping");
-
-  // gør det muligt at klikke på skull igen
-  skull.addEventListener("click", clickSkull);
+  skull.addEventListener("mousedown", clickSkull);
 }
 
 // ======= Click rum Function ======= //
 function clickRum() {
   console.log("click rum");
   let rum = document.querySelector("#rum_container");
-  // Forhindr gentagne clicks
-  rum.removeEventListener("click", clickRum);
-  // Stop rum container
+  if (lives >= 3) {
+    incrementPoints(); 
+    incrementPoints();
+} else {
+    incrementLives;
+}
+  rum.removeEventListener("mousedown", clickRum);
   rum.classList.add("paused");
-  // sæt forsvind-animation på rum
   rum.querySelector("img").classList.add("zoom_out");
-  // når forsvind-animation er færdig: rumGone
   rum.addEventListener("animationend", rumGone);
-  incrementLives();
+  
 }
 
 function rumGone() {
   let rum = document.querySelector("#rum_container");
-  // fjern event der bringer os herind
   rum.removeEventListener("animationend", rumGone);
-
-  // fjern forsvind-animation
   rum.querySelector("img").classList.remove("zoom_out");
-
-  // fjern pause
   rum.classList.remove("paused");
-
-  // genstart jumping animation
-  rum.classList.remove("jumping");
+  rum.classList.remove("jumping_rum");
   rum.offsetWidth;
-  rum.classList.add("jumping");
+  rum.classList.add("jumping_rum");
+  rum.addEventListener("mousedown", clickRum);
+}
 
-  // gør det muligt at klikke på rum igen
-  rum.addEventListener("click", clickRum);
+function rumRestart() {
+  let rum = document.querySelector("#rum_container");
+  rum.removeEventListener("animationend", rumRestart);
+  rum.classList.remove("jumping_rum");
+  rum.offsetWidth;
+  rum.classList.add("jumping_rum");
+  rum.classList.remove(
+    "position1",
+    "position2",
+    "position3",
+    "position4",
+    "position5",
+    "position6"
+  );
+
+  let pos = Math.floor(Math.random() * 6) + 1;
+  rum.classList.add("position" + pos);
+  rum.addEventListener("animationend", rumRestart);
 }
 
 // ======= Increment lives ======= //
@@ -234,6 +242,13 @@ function displayDecrementedLives() {
 
 function gameOver() {
   document.querySelector("#game_over").classList.remove("hidden");
+  document.querySelector("#skull_sound").pause();
+  document.querySelector("#background_music").pause();
+  document.querySelector("#death_music").play();
+  document.querySelector("#death_music").loop = true;
+  document.querySelector("#crying_man").play();
+  document.querySelector("#crying_man").loop = true;
+  document.querySelector("#crying_man").volume = 0.6;
   console.log("GAME OVER.");
 }
 

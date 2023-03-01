@@ -10,25 +10,31 @@
 
   <body>
     <div id="screen">
+      <div id=audio>
+        <audio id="background_music" src="sounds/background_music.mp3"></audio>
+        <audio id="treasure_click" src="sounds/treasure_sound.mp3"></audio>
+        <audio id="skull_sound" src="sounds/skull_sound.mp3"></audio>
+        <audio id="death_music" src="sounds/death_music.mp3"></audio>
+        <audio id="death_sound" src="sounds/death_sound.mp3"></audio>
+        <audio id="crying_man" src="sounds/crying_man.mp3"></audio>
+      </div>
       <div id="game">
         <div id="game_background"></div>
         <div id="game_elements">
           <div id="treasure1_container">
-            <img id="treasure1_sprite" src="images/treasure1.png" alt="mønt" />
+            <img id="treasure1_sprite" src="images/treasure1.png" alt="mønt"  draggable="fasle"/>
           </div>
           <div id="treasure2_container">
-            <img id="treasure2_sprite" src="images/treasure2.png" alt="mønt" />
+            <img id="treasure2_sprite" src="images/treasure2.png" alt="mønt" draggable="false"/>
           </div>
           <div id="treasure3_container">
-            <img id="treasure3_sprite" src="images/treasure3.png" alt="mønt" />
+            <img id="treasure3_sprite" src="images/treasure3.png" alt="mønt" draggable="false"/>
           </div>
-
-          <div id="skull_container">
-            <img id="skull_sprite" src="images/skull.png" alt="skull" />
-          </div>
-
-          <div id="rum_container">
+          <div id="rum_container" draggable="false">
             <img id="rum_sprite" src="images/rum.png" alt="hjerte" />
+          </div>
+          <div id="skull_container" draggable="false">
+            <img id="skull_sprite" src="images/skull.png" alt="skull" />
           </div>
         </div>
         <div id="game_ui">

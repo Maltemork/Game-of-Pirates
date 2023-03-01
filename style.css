@@ -193,7 +193,7 @@ h2 {
 /* Animations */
 .jumping1 {
   animation-name: jumping;
-  animation-duration: 0.75s;
+  animation-duration: 1.5s;
   animation-timing-function: ease-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -209,9 +209,17 @@ h2 {
 
 .jumping3 {
   animation-name: jumping;
-  animation-duration: 1s;
+  animation-duration: 1.75s;
   animation-timing-function: ease-out;
   animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.jumping_rum {
+  animation-name: jumping;
+  animation-duration: 0.75s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 2;
   animation-direction: alternate;
 }
 

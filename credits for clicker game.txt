@@ -2,3 +2,7 @@ https://www.freepik.com/free-vector/set-progress-bars-game-buttons-gui-elements_
 https://www.freepik.com/free-vector/pirate-game-icon-cute-cartoon-vector-set_29455447.htm#query=pirate%20treasure&position=7&from_view=search&track=ais
 https://www.freepik.com/free-vector/pirate-buries-treasure-chest-island-beach_12566304.htm#query=pirate%20background&position=0&from_view=search&track=ais
 https://www.freepik.com/free-vector/cave-with-treasure-pile-gold-coins-jewelry-gem_10412474.htm#query=pirate&position=5&from_view=search&track=sph
+
+death_sound from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6080">Pixabay</a>
+death_music from <a href="https://pixabay.com/users/solbox-25907473/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=95411">solbox</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=95411">Pixabay</a>
+skull_sound from <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=123079">Universfield</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=123079">Pixabay</a>
