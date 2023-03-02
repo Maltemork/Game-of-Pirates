@@ -10,7 +10,7 @@
 
   <body>
     <div id="screen">
-      <div id=audio>
+      <div id="audio">
         <audio id="background_music" src="sounds/background_music.mp3"></audio>
         <audio id="treasure_click" src="sounds/treasure_sound.mp3"></audio>
         <audio id="skull_sound" src="sounds/skull_sound.mp3"></audio>
@@ -22,13 +22,28 @@
         <div id="game_background"></div>
         <div id="game_elements">
           <div id="treasure1_container">
-            <img id="treasure1_sprite" src="images/treasure1.png" alt="mønt"  draggable="fasle"/>
+            <img
+              id="treasure1_sprite"
+              src="images/treasure1.png"
+              alt="mønt"
+              draggable="fasle"
+            />
           </div>
           <div id="treasure2_container">
-            <img id="treasure2_sprite" src="images/treasure2.png" alt="mønt" draggable="false"/>
+            <img
+              id="treasure2_sprite"
+              src="images/treasure2.png"
+              alt="mønt"
+              draggable="false"
+            />
           </div>
           <div id="treasure3_container">
-            <img id="treasure3_sprite" src="images/treasure3.png" alt="mønt" draggable="false"/>
+            <img
+              id="treasure3_sprite"
+              src="images/treasure3.png"
+              alt="mønt"
+              draggable="false"
+            />
           </div>
           <div id="rum_container" draggable="false">
             <img id="rum_sprite" src="images/rum.png" alt="hjerte" />
@@ -48,16 +63,39 @@
             <img id="rum3" src="images/lifeFull.png" class="active_rum" />
           </div>
           <div id="time_board">
-            <div id="time_left"></div>
+            <div id="time_container">
+              <div id="time_sprite"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div id="start" class="hidden"></div>
+      <div id="game_start">
+        <h1>GAME OF PIRATES</h1>
+        <br />
+        <p>
+          Klik på tingene! Klikker på du loot 🏆 får du 1 point. Klikker du på
+          kranier 💀 mister du liv. Klik på rom for at få liv tilbage eller 2
+          point hvis du har max liv. Hvis tiden går ud før du får 15 point har
+          du tabt.
+        </p>
+        <br />
+        <br />
+        <button id="btn_start_game" class="pulse">START GAME</button>
+      </div>
       <div id="game_over" class="hidden">
         <h2>💀 GAME OVER 💀</h2>
+        <br />
+        <div id="end_text"></div>
+        <br />
+        <h2 id="highscore_lose">0</h2>
+        <br />
+        <button id="btn_go_to_start" class="pulse">Go to start.</button>
       </div>
       <div id="level_complete" class="hidden">
         <h2>🏴‍☠️ LEVEL COMPLETE 🏴‍☠️</h2>
+        <h2 id="complete_score"></h2>
+        <h2 id="highscore_win">0</h2>
+        <button id="btn_restart" class="pulse">Play again.</button>
       </div>
     </div>
 
