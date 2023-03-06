@@ -294,6 +294,24 @@ img {
   }
 }
 
+.jumping_title {
+  animation-name: jumping_title;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes jumping_title {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-30%);
+  }
+}
+
 .zoom_out {
   animation-name: zoom_out;
   animation-duration: 0.5s;
@@ -387,14 +405,14 @@ img {
 }
 
 .shrink {
-  animation-name: shrink_kf;
-  animation-duration: 30s;
+  animation-name: shrink_timer;
+  animation-duration: 20s;
   animation-iteration-count: 1;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
 
-@keyframes shrink_kf {
+@keyframes shrink_timer {
   0% {
     scale: 1 1;
     background-color: limegreen;
