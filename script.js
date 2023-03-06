@@ -15,10 +15,10 @@ function ready() {
   document.querySelector("#btn_gameover").addEventListener("click", startGame);
   document
     .querySelector("#btn_go_to_start1")
-    .addEventListener("click", showStartScreen);
+    .addEventListener("click", restartGame);
   document
     .querySelector("#btn_go_to_start2")
-    .addEventListener("click", showStartScreen);
+    .addEventListener("click", restartGame);
 }
 
 function showStartScreen() {
@@ -240,6 +240,7 @@ function displayPoints() {
 // ======= Click skull Function ======= //
 function clickSkull() {
   console.log("Click skull");
+  document.querySelector("#skull_sound").currentTime = 0;
   document.querySelector("#skull_sound").play();
   let skull = document.querySelector("#skull_container");
   skull.removeEventListener("mousedown", clickSkull);
@@ -288,6 +289,9 @@ function skullRestart() {
 // ======= Click rum Function ======= //
 function clickRum() {
   let rum = this;
+  document.querySelector("#rum_sound").currentTime = 0;
+  document.querySelector("#rum_sound").volume = 0.5;
+  document.querySelector("#rum_sound").play();
   console.log("click rum");
   rum.removeEventListener("mousedown", clickRum);
   checkLives();
@@ -390,9 +394,6 @@ function gameOver() {
   document.querySelector("#crying_man").volume = 0.6;
 
   //restart game
-  document
-    .querySelector("#btn_go_to_start")
-    .addEventListener("click", restartGame);
   console.log("GAME OVER.");
 }
 
@@ -420,7 +421,8 @@ function levelComplete() {
 function restartGame() {
   document.querySelector("#crying_man").pause();
   document.querySelector("#death_music").pause();
-  document.querySelector("#game_over").classList.add("hidden");
+  document.querySelector("#background_music").play();
+  showStartScreen();
 }
 
 function timeIsUp() {
