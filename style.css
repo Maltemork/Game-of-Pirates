@@ -194,6 +194,24 @@ img {
   color: #ffffff;
 }
 
+.screen_animation {
+  animation-name: screen_animation;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes screen_animation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .hidden,
 #game_over.hidden,
 #level_complete.hidden,
@@ -296,7 +314,7 @@ img {
 
 .jumping_title {
   animation-name: jumping_title;
-  animation-duration: 0.5s;
+  animation-duration: 1s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -304,11 +322,11 @@ img {
 
 @keyframes jumping_title {
   0% {
-    transform: translateY(0%);
+    transform: translateY(0%) scale(1);
   }
 
   100% {
-    transform: translateY(-30%);
+    transform: translateY(-30%) scale(1.25);
   }
 }
 
@@ -330,21 +348,18 @@ img {
 
 .zoom_in {
   animation-name: zoom_in;
-  animation-duration: 0.8s;
+  animation-duration: 0.6s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
 @keyframes zoom_in {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: translate(0, 0) scale(1);
   }
-  90% {
-    transform: translate(100%, 0) scale(15) rotate(90deg);
-    opacity: 1;
-  }
+
   100% {
-    transform: translate(100%, 0) scale(15) rotate(90deg);
+    transform: translate(100%, 0) scale(10);
     opacity: 0;
   }
 }
@@ -370,24 +385,12 @@ img {
   animation-play-state: paused;
 }
 
-.delay1 {
-  animation-delay: 0s;
-}
-
-.delay2 {
-  animation-delay: 0.2s;
-}
-
-.delay3 {
-  animation-delay: 0.5s;
-}
-
 #time_board {
   position: relative;
+  padding-top: 10px;
 }
 
 #time_container {
-  position: absolute;
   width: 100%;
   aspect-ratio: 30/6;
   border: 2px solid black;
@@ -397,7 +400,6 @@ img {
 }
 
 #time_sprite {
-  position: absolute;
   width: 100%;
   height: 100%;
   background-color: limegreen;
@@ -428,7 +430,7 @@ img {
 
 @keyframes pulse_kf {
   0% {
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
 
   100% {
@@ -438,7 +440,7 @@ img {
 
 .pulse {
   animation-name: pulse_kf;
-  animation-duration: 0.5s;
+  animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-direction: alternate;

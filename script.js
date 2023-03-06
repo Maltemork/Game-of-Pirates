@@ -6,27 +6,47 @@ let points = 0;
 let lives = 3;
 let isGameRunning = false;
 let highScore = 0;
-// ======= Start ======= //
+// ======= Page load start screen ======= //
 function ready() {
   document
     .querySelector("#btn_start_game")
     .addEventListener("click", startGame);
   document.querySelector("#btn_restart").addEventListener("click", startGame);
+  document.querySelector("#btn_gameover").addEventListener("click", startGame);
   document
-    .querySelector("#btn_go_to_start")
+    .querySelector("#btn_go_to_start1")
     .addEventListener("click", showStartScreen);
-}
-
-function showGameScreen() {
-  // Skjul startskærm, game over og level complete
-  document.querySelector("#game_start").classList.add("hidden");
-  document.querySelector("#game_over").classList.add("hidden");
-  document.querySelector("#level_complete").classList.add("hidden");
+  document
+    .querySelector("#btn_go_to_start2")
+    .addEventListener("click", showStartScreen);
 }
 
 function showStartScreen() {
   // fjern hidden fra startskærm og tilføj til game over og level complete
   document.querySelector("#game_start").classList.remove("hidden");
+  document.querySelector("#game_over").classList.add("hidden");
+  document.querySelector("#level_complete").classList.add("hidden");
+}
+
+// =============== START GAME FUNCTIONS ========== //
+function startGame() {
+  resetLives();
+  resetPoints();
+  showGameScreen();
+  startTimer();
+  isGameRunning = true;
+  console.log("Game started!");
+  document.querySelector("#game_start").classList.add("hidden");
+  startAnimations();
+  startClicks();
+  startPositions();
+  animationEnd();
+  startSounds();
+}
+
+function showGameScreen() {
+  // Skjul startskærm, game over og level complete
+  document.querySelector("#game_start").classList.add("hidden");
   document.querySelector("#game_over").classList.add("hidden");
   document.querySelector("#level_complete").classList.add("hidden");
 }
@@ -48,19 +68,17 @@ function resetPoints() {
   displayPoints();
 }
 
-function startGame() {
-  resetLives();
-  resetPoints();
-  showGameScreen();
-  startTimer();
-  isGameRunning = true;
-  console.log("Game started!");
-  document.querySelector("#game_start").classList.add("hidden");
-  startAnimations();
-  startClicks();
-  startPositions();
-  animationEnd();
-  startSounds();
+function startTimer() {
+  // Sæt timer-animationen (shrink) i gang ved at tilføje klassen shrink til time_sprite
+  document.querySelector("#time_sprite").classList.remove("paused");
+  document.querySelector("#time_sprite").classList.remove("shrink");
+  document.querySelector("#time_sprite").offsetWidth;
+  document.querySelector("#time_sprite").classList.add("shrink");
+
+  // Tilføj en eventlistener som lytter efter at animationen er færdig (animationend) og kalder funktionen timeIsUp
+  document
+    .querySelector("#time_sprite")
+    .addEventListener("animationend", timeIsUp);
 }
 
 function startPositions() {
@@ -90,6 +108,13 @@ function startClicks() {
 }
 
 function startAnimations() {
+  //fjern paused
+  document.querySelector("#treasure1_container").classList.remove("paused");
+  document.querySelector("#treasure2_container").classList.remove("paused");
+  document.querySelector("#treasure3_container").classList.remove("paused");
+  document.querySelector("#skull_container").classList.remove("paused");
+  document.querySelector("#rum_container").classList.remove("paused");
+
   //fjern animations
   document
     .querySelector("#treasure1_container")
@@ -143,6 +168,7 @@ function startSounds() {
   document.querySelector("#background_music").volume = 0.7;
   document.querySelector("#skull_sound").volume = 0.3;
 }
+// ======== START GAME FUNCTIONS =========== //
 
 // ======= Click treasure Functions ======= //
 function clickTreasure() {
@@ -174,7 +200,7 @@ function treasureGone() {
 
 function treasureRestart() {
   let treasure = this;
-  treasure.removeEventListener("animationend", skullRestart);
+  treasure.removeEventListener("animationend", treasureRestart);
   treasure.classList.remove("jumping1", "jumping2", "jumping3");
   treasure.offsetWidth;
   randomizedJumping.call(this);
@@ -228,12 +254,13 @@ function skullGone() {
   let skull = document.querySelector("#skull_container");
   skull.removeEventListener("animationend", skullGone);
   skull.querySelector("img").classList.remove("zoom_in");
-  skull.classList.remove("paused");
+
   if (isGameRunning) {
     skull.classList.remove("jumping");
     skull.offsetWidth;
     skull.classList.add("jumping");
     skull.addEventListener("mousedown", clickSkull);
+    skull.classList.remove("paused");
   }
 }
 
@@ -260,20 +287,22 @@ function skullRestart() {
 
 // ======= Click rum Function ======= //
 function clickRum() {
+  let rum = this;
   console.log("click rum");
-  let rum = document.querySelector("#rum_container");
+  rum.removeEventListener("mousedown", clickRum);
+  checkLives();
+  rum.classList.add("paused");
+  rum.querySelector("img").classList.add("zoom_out");
+  rum.addEventListener("animationend", rumGone);
+}
+
+function checkLives() {
   if (lives >= 3) {
     incrementPoints();
     incrementPoints();
   } else {
-    incrementLives;
+    incrementLives();
   }
-  document.querySelector("#treasure_sound").currentTime = 0;
-  document.querySelector("#treasure_sound").play();
-  rum.removeEventListener("mousedown", clickRum);
-  rum.classList.add("paused");
-  rum.querySelector("img").classList.add("zoom_out");
-  rum.addEventListener("animationend", rumGone);
 }
 
 function rumGone() {
@@ -311,8 +340,8 @@ function rumRestart() {
 
 // ======= Increment lives ======= //
 function incrementLives() {
-  displayIncrementedLives();
   lives++;
+  displayIncrementedLives();
 }
 
 function displayIncrementedLives() {
@@ -339,11 +368,17 @@ function displayDecrementedLives() {
 }
 
 function gameOver() {
-  document.querySelector(
-    "#score_lose"
-  ).textContent = `Du fik kun ${points} point.`;
-  stopGame();
+  document.querySelector("#score_lose").textContent = `Du fik ${points} point.`;
+
+  //gameover animation.
+  document.querySelector("#game_over").classList.remove("screen_animation");
+  document.querySelector("#game_over").offsetWidth;
+  document.querySelector("#game_over").classList.add("screen_animation");
   document.querySelector("#game_over").classList.remove("hidden");
+  document
+    .querySelector("#game_over")
+    .addEventListener("animationend", stopGame);
+  //sounds
   document.querySelector("#skull_sound").pause();
   document.querySelector("#background_music").pause();
   document.querySelector("#death_music").currentTime = 0;
@@ -353,14 +388,24 @@ function gameOver() {
   document.querySelector("#crying_man").play();
   document.querySelector("#crying_man").loop = true;
   document.querySelector("#crying_man").volume = 0.6;
+
+  //restart game
   document
-    .querySelector("#restart_game_button")
+    .querySelector("#btn_go_to_start")
     .addEventListener("click", restartGame);
   console.log("GAME OVER.");
 }
 
 function levelComplete() {
-  stopGame();
+  document
+    .querySelector("#level_complete")
+    .classList.remove("screen_animation");
+  document.querySelector("#level_complete").offsetWidth;
+  document.querySelector("#level_complete").classList.add("screen_animation");
+  document.querySelector("#level_complete").classList.remove("hidden");
+  document
+    .querySelector("#level_complete")
+    .addEventListener("animationend", stopGame);
   if (highScore < points) {
     highScore = points;
   }
@@ -378,27 +423,15 @@ function restartGame() {
   document.querySelector("#game_over").classList.add("hidden");
 }
 
-function startTimer() {
-  // Sæt timer-animationen (shrink) i gang ved at tilføje klassen shrink til time_sprite
-  document.querySelector("#time_sprite").classList.remove("shrink");
-  document.querySelector("#time_sprite").offsetWidth;
-  document.querySelector("#time_sprite").classList.add("shrink");
-
-  // Tilføj en eventlistener som lytter efter at animationen er færdig (animationend) og kalder funktionen timeIsUp
-  document
-    .querySelector("#time_sprite")
-    .addEventListener("animationend", timeIsUp);
-}
-
 function timeIsUp() {
   console.log("Tiden er gået!");
 
-  if (points >= 15) {
+  if (points >= 25) {
     levelComplete();
   } else {
     document.querySelector(
       "#end_text"
-    ).textContent = `Du fik ikke over 15 point før tiden gik ud.`;
+    ).textContent = `Du fik ikke over 25 point før tiden gik ud.`;
     gameOver();
   }
 }
@@ -416,8 +449,10 @@ function stopGame() {
   document
     .querySelector("#treasure3_container")
     .classList.remove("jumping1", "jumping2", "jumping3");
+
   document.querySelector("#skull_container").classList.remove("jumping_skull");
   document.querySelector("#rum_container").classList.remove("jumping_rum");
+  document.querySelector("#time_sprite").classList.add("paused");
 
   //fjern event listeners
   document
