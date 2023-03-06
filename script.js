@@ -136,6 +136,9 @@ function animationEnd() {
 }
 
 function startSounds() {
+  document.querySelector("#death_music").pause();
+  document.querySelector("#crying_man").pause();
+  document.querySelector("#background_music").currentTime = 0;
   document.querySelector("#background_music").play();
   document.querySelector("#background_music").volume = 0.7;
   document.querySelector("#skull_sound").volume = 0.3;
@@ -265,6 +268,8 @@ function clickRum() {
   } else {
     incrementLives;
   }
+  document.querySelector("#treasure_sound").currentTime = 0;
+  document.querySelector("#treasure_sound").play();
   rum.removeEventListener("mousedown", clickRum);
   rum.classList.add("paused");
   rum.querySelector("img").classList.add("zoom_out");
@@ -334,6 +339,9 @@ function displayDecrementedLives() {
 }
 
 function gameOver() {
+  document.querySelector(
+    "#score_lose"
+  ).textContent = `Du fik kun ${points} point.`;
   stopGame();
   document.querySelector("#game_over").classList.remove("hidden");
   document.querySelector("#skull_sound").pause();
@@ -348,9 +356,6 @@ function gameOver() {
   document
     .querySelector("#restart_game_button")
     .addEventListener("click", restartGame);
-  document.querySelector(
-    "#highscore_lose"
-  ).textContent = `Highscore: ${highScore}`;
   console.log("GAME OVER.");
 }
 
