@@ -474,9 +474,9 @@ img {
   padding: 0.5em 0.75em;
   font-size: 2em;
   margin: auto;
-  background-color: rgb(255, 230, 0);
+  background-color: rgb(255, 153, 0);
   color: #ffffff;
-  border: 5px solid #704c00;
+  border: 5px solid #ffe600;
   cursor: pointer;
   border-radius: 0px;
 }

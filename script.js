@@ -19,6 +19,7 @@ function ready() {
   document
     .querySelector("#btn_go_to_start2")
     .addEventListener("click", restartGame);
+  showStartScreen();
 }
 
 function showStartScreen() {
@@ -32,15 +33,13 @@ function showStartScreen() {
 function startGame() {
   resetLives();
   resetPoints();
+  isGameRunning = true;
   showGameScreen();
   startTimer();
-  isGameRunning = true;
   console.log("Game started!");
-  document.querySelector("#game_start").classList.add("hidden");
   startAnimations();
   startClicks();
   startPositions();
-  animationEnd();
   startSounds();
 }
 
@@ -108,7 +107,7 @@ function startClicks() {
 }
 
 function startAnimations() {
-  //fjern paused
+  //fjern paused 
   document.querySelector("#treasure1_container").classList.remove("paused");
   document.querySelector("#treasure2_container").classList.remove("paused");
   document.querySelector("#treasure3_container").classList.remove("paused");
@@ -140,6 +139,8 @@ function startAnimations() {
   document.querySelector("#treasure3_container").classList.add("jumping1");
   document.querySelector("#skull_container").classList.add("jumping_skull");
   document.querySelector("#rum_container").classList.add("jumping_rum");
+  //sæt
+  animationEnd();
 }
 
 function animationEnd() {
@@ -262,7 +263,9 @@ function skullGone() {
     skull.classList.add("jumping");
     skull.addEventListener("mousedown", clickSkull);
     skull.classList.remove("paused");
+    
   }
+  
 }
 
 function skullRestart() {
@@ -357,7 +360,7 @@ function displayIncrementedLives() {
 // ======= Decrement lives ======= //
 function decrementLives() {
   if (lives === 1) {
-    document.querySelector("#end_text").textContent = `Du løb tør for liv!`;
+    document.querySelector("#end_text").textContent = `You ran out of lives!`;
     gameOver();
   } else {
     displayDecrementedLives();
@@ -433,7 +436,7 @@ function timeIsUp() {
   } else {
     document.querySelector(
       "#end_text"
-    ).textContent = `Du fik ikke over 25 point før tiden gik ud.`;
+    ).textContent = `You did not get 25 points before the time ran out.`;
     gameOver();
   }
 }
