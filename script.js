@@ -107,7 +107,7 @@ function startClicks() {
 }
 
 function startAnimations() {
-  //fjern paused 
+  //fjern paused
   document.querySelector("#treasure1_container").classList.remove("paused");
   document.querySelector("#treasure2_container").classList.remove("paused");
   document.querySelector("#treasure3_container").classList.remove("paused");
@@ -258,14 +258,10 @@ function skullGone() {
   skull.querySelector("img").classList.remove("zoom_in");
 
   if (isGameRunning) {
-    skull.classList.remove("jumping");
-    skull.offsetWidth;
-    skull.classList.add("jumping");
     skull.addEventListener("mousedown", clickSkull);
     skull.classList.remove("paused");
-    
+    skullRestart();
   }
-  
 }
 
 function skullRestart() {
@@ -375,7 +371,9 @@ function displayDecrementedLives() {
 }
 
 function gameOver() {
-  document.querySelector("#score_lose").textContent = `Du fik ${points} point.`;
+  document.querySelector(
+    "#score_lose"
+  ).textContent = `You got ${points} points.`;
 
   //gameover animation.
   document.querySelector("#game_over").classList.remove("screen_animation");

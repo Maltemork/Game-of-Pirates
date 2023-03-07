@@ -28,6 +28,7 @@ p {
   font-size: 150%;
   margin: auto;
   text-align-last: center;
+  background-color: rgba(0, 0, 0, 0.281);
 }
 
 button {
@@ -53,6 +54,7 @@ img {
   display: grid;
   grid-template-columns: 10% / 10%;
   grid-template: 100% / 100%;
+  cursor: crosshair;
 }
 
 #game_background {
@@ -204,12 +206,10 @@ img {
 
 @keyframes screen_animation {
   0% {
-    transform: scale(0) rotation(760deg);
     opacity: 0;
   }
 
   100% {
-    transform: scale(1) rotation(0deg);
     opacity: 1;
   }
 }
