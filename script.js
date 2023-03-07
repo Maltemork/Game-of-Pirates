@@ -166,7 +166,7 @@ function startSounds() {
   document.querySelector("#crying_man").pause();
   document.querySelector("#background_music").currentTime = 0;
   document.querySelector("#background_music").play();
-  document.querySelector("#background_music").volume = 0.7;
+  document.querySelector("#background_music").volume = 0.3;
   document.querySelector("#skull_sound").volume = 0.3;
 }
 // ======== START GAME FUNCTIONS =========== //
