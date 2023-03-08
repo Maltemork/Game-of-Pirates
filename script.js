@@ -204,7 +204,8 @@ function treasureRestart() {
   treasure.removeEventListener("animationend", treasureRestart);
   treasure.classList.remove("jumping1", "jumping2", "jumping3");
   treasure.offsetWidth;
-  randomizedJumping.call(this);
+  let number = Math.floor(Math.random() * 3) + 1;
+  treasure.classList.add("jumping" + number);
   treasure.classList.remove(
     "position1",
     "position2",
@@ -220,11 +221,6 @@ function treasureRestart() {
 }
 
 // tilfældig nummer til jumping animation
-function randomizedJumping() {
-  let treasure = this;
-  let number = Math.floor(Math.random() * 3) + 1;
-  treasure.classList.add("jumping" + number);
-}
 
 // ======= Increment Points ======= //
 function incrementPoints() {
@@ -274,7 +270,7 @@ function skullRestart() {
   skull.classList.remove(
     "position1",
     "position2",
-    "position3",
+    "position3", 
     "position4",
     "position5",
     "position6"
@@ -313,16 +309,13 @@ function rumGone() {
   rum.removeEventListener("animationend", rumGone);
   rum.querySelector("img").classList.remove("zoom_out");
   if (isGameRunning) {
-    rum.classList.remove("paused");
-    rum.classList.remove("jumping_rum");
-    rum.offsetWidth;
-    rum.classList.add("jumping_rum");
-    rum.addEventListener("mousedown", clickRum);
+    rumRestart();
   }
 }
 
 function rumRestart() {
   let rum = document.querySelector("#rum_container");
+  rum.removeEventListener("mousedown", clickRum);
   rum.removeEventListener("animationend", rumRestart);
   rum.classList.remove("jumping_rum");
   rum.offsetWidth;
@@ -330,7 +323,7 @@ function rumRestart() {
   rum.classList.remove(
     "position1",
     "position2",
-    "position3",
+    "position3", 
     "position4",
     "position5",
     "position6"
@@ -338,7 +331,9 @@ function rumRestart() {
 
   let pos = Math.floor(Math.random() * 6) + 1;
   rum.classList.add("position" + pos);
+  rum.classList.remove("paused");
   rum.addEventListener("animationend", rumRestart);
+  rum.addEventListener("mousedown", clickRum);
 }
 
 // ======= Increment lives ======= //
